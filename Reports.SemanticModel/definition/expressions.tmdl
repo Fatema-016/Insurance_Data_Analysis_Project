@@ -1,0 +1,7 @@
+expression 'Score sentiment' = AIFunctions.Contents(){[Key = "CognitiveServices.ScoreSentimenttexttext"]}[Data]
+	lineageTag: 34d218a6-832d-4d2e-a490-b67a2f043390
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Function
+

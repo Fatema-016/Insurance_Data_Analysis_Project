@@ -1,0 +1,59 @@
+table 'Customer Feedback'
+	lineageTag: 1a0d1194-849b-4572-ab86-897e485ce528
+
+	column 'Customer Name'
+		dataType: string
+		lineageTag: e5cd9f6c-7cc1-443e-99fc-babbeaa91a23
+		summarizeBy: none
+		sourceColumn: Customer Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Feedback
+		dataType: string
+		lineageTag: 3b7c5ea6-936f-409f-b8f4-dbe556a763f9
+		summarizeBy: none
+		sourceColumn: Feedback
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Score sentiment'
+		dataType: double
+		lineageTag: 118ffb64-cd7b-46df-b125-5df17f7ad9cb
+		summarizeBy: sum
+		sourceColumn: Score sentiment
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'One Word Feedback'
+		dataType: string
+		lineageTag: 1e7b121b-0579-44a8-b8b5-d316453582cd
+		summarizeBy: none
+		sourceColumn: One Word Feedback
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'Customer Feedback' = m
+		mode: import
+		source =
+				let
+				    Source = Excel.Workbook(File.Contents("C:\Users\alefi\Downloads\DataAnanlystBootcamp-KNaik PowerBI\Proj2 - Insurance Data Analysis\Insurance+Customer+Feedback.xlsx"), null, true),
+				    Sheet1_Sheet = Source{[Item="Sheet1",Kind="Sheet"]}[Data],
+				    #"Changed Type" = Table.TransformColumnTypes(Sheet1_Sheet,{{"Column1", type text}, {"Column2", type text}}),
+				    #"Promoted Headers" = Table.PromoteHeaders(#"Changed Type", [PromoteAllScalars=true]),
+				    #"Changed Type1" = Table.TransformColumnTypes(#"Promoted Headers",{{"Customer Name", type text}, {"Feedback", type text}}),
+				    #"Applied Score sentiment" = AIFunctions.PostProcess(Table.AddColumn(#"Changed Type1", "Score sentiment", each #"Score sentiment"([Feedback], null)), "Score sentiment", "CognitiveServices.ScoreSentimenttexttext") meta [FunctionBrowser="TextAnalytics"],
+				    #"Changed Type2" = Table.TransformColumnTypes(#"Applied Score sentiment",{{"Score sentiment", type number}}),
+				    #"Added Conditional Column" = Table.AddColumn(#"Changed Type2", "One Word Feedback", each if [Score sentiment] >= 0.8 then "Excellent" else if [Score sentiment] >= 0.6 then "Good" else "Needs Improvement"),
+				    #"Changed Type3" = Table.TransformColumnTypes(#"Added Conditional Column",{{"One Word Feedback", type text}})
+				in
+				    #"Changed Type3"
+
+	changedProperty = Name
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

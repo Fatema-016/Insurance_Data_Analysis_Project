@@ -1,0 +1,29 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-IN
+	dataAccessOptions
+		fastCombine
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["InsuranceData","Customer Feedback","Score sentiment"]
+
+annotation __PBI_TimeIntelligenceEnabled = 1
+
+annotation PBIDesktopVersion = 2.145.1105.0 (25.07)+decbc46fce458c5b8d5109d6f32a743f2ac949c8
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table InsuranceData
+ref table DateTableTemplate_981e7f64-03ee-49f3-9e6c-91bdb54ff557
+ref table LocalDateTable_2b990d4c-f6f7-4b54-82f4-dde90eb9576a
+ref table LocalDateTable_4e47c7fd-959b-4dd0-b675-89dfbe162ad4
+ref table LocalDateTable_a912904c-0530-4475-bee2-5dfff37bfc47
+ref table 'Customer Feedback'
+
+ref role 'Travel Role'
+ref role 'Health Role'
+
+ref cultureInfo en-US
+
