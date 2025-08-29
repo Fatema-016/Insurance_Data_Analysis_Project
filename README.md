@@ -30,6 +30,12 @@ The analysis is based on a simulated insurance dataset containing details on pol
 * `SQL Query.sql`: The SQL query used for data import.
 * `README.md`: Project description and documentation.
 
+## Screenshots
+
+![](https://github.com/Fatema-016/Insurance_Data_Analysis_Project/blob/main/images/Screenshot%20(56).png)
+![](https://github.com/Fatema-016/Insurance_Data_Analysis_Project/blob/main/images/Screenshot%20(57).png)
+![](https://github.com/Fatema-016/Insurance_Data_Analysis_Project/blob/main/images/Screenshot%20(58).png)
+
 ## How to View the Report
 
 To open and interact with the Power BI report:
